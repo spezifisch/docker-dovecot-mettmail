@@ -1,0 +1,9 @@
+imap:
+    host: testcot
+    port: 993
+    user: c
+    password: pass
+lmtp:
+    host: dovecot
+    port: 24
+    envelope_recipient: test

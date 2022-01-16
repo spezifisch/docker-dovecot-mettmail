@@ -1,0 +1,35 @@
+version: "3"
+
+services:
+  testcot:
+    image: ghcr.io/spezifisch/docker-test-dovecot:latest
+    ports:
+      - "1993:993" # imaps
+    volumes:
+      - test-home:/home
+      - test-ssl:/etc/dovecot/ssl
+
+  mettmail_test_a:
+    image: ghcr.io/spezifisch/mettmail:latest
+    volumes:
+      - ./example-config/mettmail-test-a.yaml:/config/mettmail.yaml:ro
+    command: [ "--config", "/config/mettmail.yaml" ]
+    restart: unless-stopped
+
+  mettmail_test_b:
+    image: ghcr.io/spezifisch/mettmail:latest
+    volumes:
+      - ./example-config/mettmail-test-b.yaml:/config/mettmail.yaml:ro
+    command: [ "--config", "/config/mettmail.yaml" ]
+    restart: unless-stopped
+
+  mettmail_test_c:
+    image: ghcr.io/spezifisch/mettmail:latest
+    volumes:
+      - ./example-config/mettmail-test-c.yaml:/config/mettmail.yaml:ro
+    command: [ "--config", "/config/mettmail.yaml" ]
+    restart: unless-stopped
+
+volumes:
+  test-home: null
+  test-ssl: null

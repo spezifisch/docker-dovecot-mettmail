@@ -1,0 +1,23 @@
+# generate certs for dovecot with:
+# $ mkdir -p data/ssl
+# $ openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout ./data/ssl/dovecot.key -out ./data/ssl/dovecot.crt
+
+version: "3"
+
+services:
+  dovecot:
+    build:
+      context: ./docker-dovecot
+    image: ghcr.io/spezifisch/docker-dovecot-mettmail/dovecot:dev
+    volumes:
+      - auth:/etc/dovecot-auth
+      - vmail:/srv/vmail
+      - ./data/ssl:/etc/ssl/private:ro
+    ports:
+      - "993:993" # imaps
+      - "4190:4190" # managesieve
+    restart: unless-stopped
+
+volumes:
+  auth: null
+  vmail: null
